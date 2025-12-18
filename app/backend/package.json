@@ -7,16 +7,24 @@
     "start": "node dist/index.js",
     "lint": "eslint",
     "format": "prettier .",
-    "check": "prettier --write . && eslint --fix"
+    "check": "prettier --write . && eslint --fix",
+    "prisma:mig": "prisma migrate dev",
+    "prisma:gen": "prisma generate",
+    "prisma:std": "prisma studio --config ./prisma.config.ts --port 51212"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.6",
+    "@prisma/adapter-better-sqlite3": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "dotenv": "^17.2.3",
     "hono": "^4.11.0"
   },
   "devDependencies": {
     "@hono/eslint-config": "^2.0.3",
-    "@types/node": "^20.11.17",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20.19.26",
     "prettier": "catalog:",
+    "prisma": "^7.2.0",
     "tsx": "^4.7.1",
     "typescript": "catalog:"
   }

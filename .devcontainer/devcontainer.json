@@ -21,10 +21,11 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss",
-        "streetsidesoftware.code-spell-checker"
+        "streetsidesoftware.code-spell-checker",
+        "prisma.prisma"
       ]
     }
   },
   "postAttachCommand": "sudo chown -R node:node /app ./.pnpm-store && pnpm install",
-  "forwardPorts": [3000, 3157]
+  "forwardPorts": [3000, 3157, 51212]
 }
