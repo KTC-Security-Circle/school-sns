@@ -10,7 +10,9 @@
     "check": "prettier --write . && eslint --fix",
     "prisma:mig": "prisma migrate dev",
     "prisma:gen": "prisma generate",
-    "prisma:std": "prisma studio --config ./prisma.config.ts --port 51212"
+    "prisma:std": "prisma studio --config ./prisma.config.ts --port 51212",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.6",
