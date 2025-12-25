@@ -15,6 +15,7 @@ export const auth = new Hono<{ Variables: Variables }>()
   .post(
     '/signup',
     describeRoute({
+      tags: ['Auth'],
       description: 'Signup endpoint',
       responses: {
         200: {
@@ -37,6 +38,7 @@ export const auth = new Hono<{ Variables: Variables }>()
   .post(
     '/login',
     describeRoute({
+      tags: ['Auth'],
       description: 'Login endpoint',
       responses: {
         200: {
@@ -60,6 +62,7 @@ export const auth = new Hono<{ Variables: Variables }>()
     '/logout',
     authCheck,
     describeRoute({
+      tags: ['Auth'],
       description: 'Logout endpoint',
       responses: {
         200: {

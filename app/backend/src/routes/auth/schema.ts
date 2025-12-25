@@ -15,7 +15,7 @@ const loginSchema = z.object({
 
 // ユーザー情報の型（パスワードを含まない）
 const userResponseSchema = z.object({
-  id: z.string(),
+  id: z.uuid({ version: 'v4' }),
   userName: z.string(),
   email: z.email(),
   role: z.string(),
@@ -23,8 +23,8 @@ const userResponseSchema = z.object({
   bio: z.string().nullable(),
   avatarUrl: z.string().nullable(),
 
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 })
 
 // ログイン成功時のレスポンス
