@@ -2,7 +2,6 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { summarizePost } from './lib/langchain/index.js'
-import { auth } from './routes/auth/index.js'
 
 export const app = new Hono()
   .use(
@@ -28,7 +27,6 @@ export const app = new Hono()
       return c.json({ error: 'Internal Server Error' }, 500)
     }
   })
-  .route('/auth', auth)
 
 export type AppType = typeof app
 
