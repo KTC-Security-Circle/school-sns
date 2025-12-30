@@ -1,7 +1,8 @@
+import { Result } from '@praha/byethrow'
 import * as argon2 from 'argon2'
-import { HTTPException } from 'hono/http-exception'
 import { sign } from 'hono/jwt'
 import type { SignupInput, LoginInput } from '../../routes/auth/schema.js'
+import { EmailAlreadyExistsError, InvalidCredentialsError } from './error.js'
 import { authRepository } from './repository.js'
 
 const JWT_SECRET = process.env.JWT_SECRET ?? 'it-is-very-secret'
@@ -21,22 +22,6 @@ const generateJwt = async (user: { id: string; role: string }) => {
   return await sign(payload, JWT_SECRET)
 }
 
-export class AuthError extends Error {}
-
-export class EmailAlreadyExistsError extends AuthError {
-  constructor() {
-    super('Email already exists')
-    this.name = 'EmailAlreadyExistsError'
-  }
-}
-
-export class InvalidCredentialsError extends AuthError {
-  constructor() {
-    super('Invalid email or password')
-    this.name = 'InvalidCredentialsError'
-  }
-}
-
 export const authService = {
   /**
    * 新規登録
@@ -45,7 +30,7 @@ export const authService = {
     // 1. 重複チェック
     const existingUser = await authRepository.findByEmail(input.email)
     if (existingUser) {
-      throw new EmailAlreadyExistsError()
+      return Result.fail(new EmailAlreadyExistsError())
     }
 
     // 2. ハッシュ化
@@ -58,7 +43,7 @@ export const authService = {
     const token = await generateJwt(user)
 
     // 5. UserResponse型に変換して返却
-    return {
+    return Result.succeed({
       token,
       user: {
         id: user.id,
@@ -70,7 +55,7 @@ export const authService = {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
-    }
+    })
   },
   /**
    * ログイン
@@ -80,7 +65,7 @@ export const authService = {
     const user = await authRepository.findByEmail(input.email)
 
     if (!user) {
-      throw new InvalidCredentialsError()
+      return Result.fail(new InvalidCredentialsError())
     }
 
     // 2. パスワード検証
@@ -90,14 +75,14 @@ export const authService = {
     )
 
     if (!isValidPassword) {
-      throw new InvalidCredentialsError()
+      return Result.fail(new InvalidCredentialsError())
     }
 
     // 3. ★JWT生成 (共通関数を使用)
     const token = await generateJwt(user)
 
     // 4. UserResponse型に変換して返却
-    return {
+    return Result.succeed({
       token,
       user: {
         id: user.id,
@@ -109,7 +94,7 @@ export const authService = {
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
-    }
+    })
   },
 
   logout: () => {
