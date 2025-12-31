@@ -1,19 +1,16 @@
 import { Hono } from 'hono'
 import { describeRoute, resolver, validator } from 'hono-openapi'
 import z from 'zod'
+import { checkAuth } from '../../middleware/checkAuth.js'
+import type { Variables as AuthVariables } from '../../middleware/checkAuth.js'
 import { usersService } from '../../services/users/index.js'
-import { checkAuthMiddleware } from './middleware.js'
 import {
   editUserRequestSchema,
   getUserDetailResponseSchema,
   userArtifactsResponseSchema,
 } from './schema.js'
 
-interface Variables {
-  userId: string
-}
-
-export const users = new Hono<{ Variables: Variables }>()
+export const users = new Hono<{ Variables: AuthVariables }>()
   .get(
     '/me',
     describeRoute({
@@ -33,7 +30,7 @@ export const users = new Hono<{ Variables: Variables }>()
         },
       },
     }),
-    checkAuthMiddleware,
+    checkAuth,
     async (c) => {
       const userId = c.var.userId
       const result = await usersService.getUserDetail(userId)
@@ -64,7 +61,7 @@ export const users = new Hono<{ Variables: Variables }>()
       },
     }),
     validator('json', editUserRequestSchema),
-    checkAuthMiddleware,
+    checkAuth,
     async (c) => {
       const userId = c.var.userId
       const input = c.req.valid('json')
@@ -126,7 +123,7 @@ export const users = new Hono<{ Variables: Variables }>()
         },
       },
     }),
-    checkAuthMiddleware,
+    checkAuth,
     async (c) => {
       const { userId: targetUserId } = c.req.param()
       const userId = c.get('userId')
@@ -155,7 +152,7 @@ export const users = new Hono<{ Variables: Variables }>()
         },
       },
     }),
-    checkAuthMiddleware,
+    checkAuth,
     async (c) => {
       const { userId: targetUserId } = c.req.param()
       const userId = c.var.userId

@@ -1,9 +1,13 @@
 import type { Context, Input, Next } from 'hono'
-import { authCookie } from '../../lib/authCookie.js'
-import { jwt } from '../../lib/jwt.js'
+import { authCookie } from '../lib/authCookie.js'
+import { jwt } from '../lib/jwt.js'
 
-const checkAuthMiddleware = async <
-  TEnv extends { Variables: { userId: string } },
+export interface Variables {
+  userId: string
+}
+
+export const checkAuth = async <
+  TEnv extends { Variables: Variables },
   TPath extends string,
   TInput extends Input,
 >(
@@ -18,5 +22,3 @@ const checkAuthMiddleware = async <
   c.set('userId', payload.sub)
   await next()
 }
-
-export { checkAuthMiddleware }
