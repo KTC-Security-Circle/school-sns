@@ -152,7 +152,7 @@ model Assets {
   userId String
   url String
   fileType String
-  originName String
+  originalName String
   sizeBytes BigInt
   createdAt DateTime @default(now())
 }
