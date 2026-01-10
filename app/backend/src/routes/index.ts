@@ -2,8 +2,13 @@ import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 import { describeRoute, resolver, validator } from 'hono-openapi'
 import z from 'zod'
+import { artifacts } from './artifacts/index.js'
 import { auth } from './auth/index.js'
+import { media } from './media/index.js'
 import { demoQuerySchema, demoResponseSchema } from './schema.js'
+import { scraps } from './scraps/index.js'
+import { search } from './search/index.js'
+import { users } from './users/index.js'
 
 export const app = new Hono()
   .use(
@@ -57,5 +62,10 @@ export const app = new Hono()
     },
   )
   .route('/auth', auth)
+  .route('/users', users)
+  .route('/search', search)
+  .route('/media', media)
+  .route('/artifacts', artifacts)
+  .route('/scraps', scraps)
 
 export type AppType = typeof app
