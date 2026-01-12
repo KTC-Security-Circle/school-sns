@@ -132,7 +132,7 @@ model Tags {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tagArticles TagArtifacts[]
+  tagArtifacts TagArtifacts[]
 
   tagScraps TagScraps[]
 }
@@ -141,7 +141,7 @@ model TagArtifacts {
   id String @id @default(uuid(4))
   artifact Artifacts @relation(fields: [artifactId], references: [id])
   artifactId String
-  tag Tags @relation(fields: [tagId], references: [id])
+  tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
   createdAt DateTime @default(now())
 }
@@ -170,7 +170,7 @@ model TagScraps {
   id String @id @default(uuid(4))
   scrap Scraps @relation(fields: [scrapId], references: [id])
   scrapId String
-  tag Tags @relation(fields: [tagId], references: [id])
+  tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
   createdAt DateTime @default(now())
 }
