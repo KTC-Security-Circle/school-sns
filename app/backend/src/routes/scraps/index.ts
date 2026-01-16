@@ -34,16 +34,14 @@ export const scraps = new Hono<{ Variables: AuthVariables }>()
     checkAuth,
     validator('json', registerScrapSchema),
     async (c) => {
-      const date = c.req.valid('json')
+      const { tagIds, ...data } = c.req.valid('json')
       const userId = c.var.userId
       const result = await scrapsService.addScrap(
         {
-          title: date.title,
-          body: date.body,
-          parentId: date.parentId ?? null,
           userId,
+          ...data,
         },
-        date.tagIds,
+        tagIds,
       )
 
       if (result.type === 'Failure') {

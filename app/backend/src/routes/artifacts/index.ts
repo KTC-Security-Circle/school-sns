@@ -35,12 +35,15 @@ export const artifacts = new Hono()
     validator('json', registerArtifactSchema),
     async (c) => {
       const userId = c.var.userId
-      const data = c.req.valid('json')
+      const { tagIds, ...data } = c.req.valid('json')
 
-      const result = await artifactsService.addArtifact({
-        userId,
-        ...data,
-      })
+      const result = await artifactsService.addArtifact(
+        {
+          userId,
+          ...data,
+        },
+        tagIds,
+      )
 
       if (result.type === 'Failure') {
         return c.json(
