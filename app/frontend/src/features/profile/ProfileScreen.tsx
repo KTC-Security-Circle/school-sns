@@ -37,8 +37,8 @@ export default function ProfileScreen() {
       </main>
       <button
         className="absolute bottom-24 right-4 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white shadow-xl shadow-blue-500/30 hover:bg-blue-500/90 hover:scale-105 active:scale-95 transition-all group"
-        aria-label="Create post"
-        onClick={() => navigate({ to: '/posts/new' })}
+        aria-label="アーティファクトを作成"
+        onClick={() => navigate({ to: '/artifacts/new' })}
         type="button"
       >
         <MaterialIcon

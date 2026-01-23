@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
-import NewPostScreen from '../../features/posts/NewPostScreen'
-import PostHeader from '../../features/posts/components/PostHeader'
+import NewArtifactScreen from '../../features/artifacts/NewArtifactScreen'
+import ArtifactEditorHeader from '../../features/artifacts/components/ArtifactEditorHeader'
 
-export const Route = createFileRoute('/posts/new')({
+export const Route = createFileRoute('/artifacts/new')({
   component: RouteComponent,
   staticData: {
     shell: {
-      header: PostHeader,
+      header: ArtifactEditorHeader,
       backgroundClassName: 'bg-slate-100',
       frameClassName:
         'bg-white shadow-2xl overflow-hidden border-x border-slate-200',
@@ -17,5 +17,5 @@ export const Route = createFileRoute('/posts/new')({
 })
 
 function RouteComponent() {
-  return <NewPostScreen />
+  return <NewArtifactScreen />
 }

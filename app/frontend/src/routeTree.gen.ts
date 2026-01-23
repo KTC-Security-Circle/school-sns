@@ -16,8 +16,9 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ArtifactsIndexRouteImport } from './routes/artifacts/index'
-import { Route as PostsNewRouteImport } from './routes/posts/new'
+import { Route as ScrapsScrapIdRouteImport } from './routes/scraps/$scrapId'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as ArtifactsNewRouteImport } from './routes/artifacts/new'
 import { Route as ArtifactsArtifactIdRouteImport } from './routes/artifacts/$artifactId'
 
 const SignupRoute = SignupRouteImport.update({
@@ -55,14 +56,19 @@ const ArtifactsIndexRoute = ArtifactsIndexRouteImport.update({
   path: '/artifacts/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PostsNewRoute = PostsNewRouteImport.update({
-  id: '/posts/new',
-  path: '/posts/new',
+const ScrapsScrapIdRoute = ScrapsScrapIdRouteImport.update({
+  id: '/scraps/$scrapId',
+  path: '/scraps/$scrapId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
   path: '/demo/tanstack-query',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtifactsNewRoute = ArtifactsNewRouteImport.update({
+  id: '/artifacts/new',
+  path: '/artifacts/new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArtifactsArtifactIdRoute = ArtifactsArtifactIdRouteImport.update({
@@ -79,8 +85,9 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
+  '/artifacts/new': typeof ArtifactsNewRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
+  '/scraps/$scrapId': typeof ScrapsScrapIdRoute
   '/artifacts': typeof ArtifactsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -91,8 +98,9 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
+  '/artifacts/new': typeof ArtifactsNewRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
+  '/scraps/$scrapId': typeof ScrapsScrapIdRoute
   '/artifacts': typeof ArtifactsIndexRoute
 }
 export interface FileRoutesById {
@@ -104,8 +112,9 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/signup': typeof SignupRoute
   '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
+  '/artifacts/new': typeof ArtifactsNewRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
+  '/scraps/$scrapId': typeof ScrapsScrapIdRoute
   '/artifacts/': typeof ArtifactsIndexRoute
 }
 export interface FileRouteTypes {
@@ -118,8 +127,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/artifacts/$artifactId'
+    | '/artifacts/new'
     | '/demo/tanstack-query'
-    | '/posts/new'
+    | '/scraps/$scrapId'
     | '/artifacts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -130,8 +140,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/artifacts/$artifactId'
+    | '/artifacts/new'
     | '/demo/tanstack-query'
-    | '/posts/new'
+    | '/scraps/$scrapId'
     | '/artifacts'
   id:
     | '__root__'
@@ -142,8 +153,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signup'
     | '/artifacts/$artifactId'
+    | '/artifacts/new'
     | '/demo/tanstack-query'
-    | '/posts/new'
+    | '/scraps/$scrapId'
     | '/artifacts/'
   fileRoutesById: FileRoutesById
 }
@@ -155,8 +167,9 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SignupRoute: typeof SignupRoute
   ArtifactsArtifactIdRoute: typeof ArtifactsArtifactIdRoute
+  ArtifactsNewRoute: typeof ArtifactsNewRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  PostsNewRoute: typeof PostsNewRoute
+  ScrapsScrapIdRoute: typeof ScrapsScrapIdRoute
   ArtifactsIndexRoute: typeof ArtifactsIndexRoute
 }
 
@@ -211,11 +224,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtifactsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/posts/new': {
-      id: '/posts/new'
-      path: '/posts/new'
-      fullPath: '/posts/new'
-      preLoaderRoute: typeof PostsNewRouteImport
+    '/scraps/$scrapId': {
+      id: '/scraps/$scrapId'
+      path: '/scraps/$scrapId'
+      fullPath: '/scraps/$scrapId'
+      preLoaderRoute: typeof ScrapsScrapIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demo/tanstack-query': {
@@ -223,6 +236,13 @@ declare module '@tanstack/react-router' {
       path: '/demo/tanstack-query'
       fullPath: '/demo/tanstack-query'
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artifacts/new': {
+      id: '/artifacts/new'
+      path: '/artifacts/new'
+      fullPath: '/artifacts/new'
+      preLoaderRoute: typeof ArtifactsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/artifacts/$artifactId': {
@@ -243,8 +263,9 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SignupRoute: SignupRoute,
   ArtifactsArtifactIdRoute: ArtifactsArtifactIdRoute,
+  ArtifactsNewRoute: ArtifactsNewRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  PostsNewRoute: PostsNewRoute,
+  ScrapsScrapIdRoute: ScrapsScrapIdRoute,
   ArtifactsIndexRoute: ArtifactsIndexRoute,
 }
 export const routeTree = rootRouteImport

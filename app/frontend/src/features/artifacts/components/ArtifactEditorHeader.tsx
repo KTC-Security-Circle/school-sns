@@ -1,6 +1,6 @@
 import { useNavigate } from '@tanstack/react-router'
 
-export default function PostHeader() {
+export default function ArtifactEditorHeader() {
   const navigate = useNavigate()
 
   return (
@@ -10,10 +10,10 @@ export default function PostHeader() {
         onClick={() => navigate({ to: '/' })}
         type="button"
       >
-        Cancel
+        キャンセル
       </button>
       <h1 className="text-[16px] font-bold text-slate-900 tracking-tight">
-        New Post
+        投稿・編集
       </h1>
       <div className="w-[50px]" />
     </div>

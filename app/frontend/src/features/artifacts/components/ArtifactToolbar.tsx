@@ -19,7 +19,7 @@ function ToolbarButton({ icon, className }: ToolbarButtonProps) {
   )
 }
 
-export default function PostToolbar() {
+export default function ArtifactToolbar() {
   return (
     <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide border-y border-slate-200 py-2">
       <ToolbarButton icon="format_bold" />

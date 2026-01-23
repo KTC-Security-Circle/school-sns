@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import MaterialIcon from '../../components/MaterialIcon'
 import TimelineFilters from './components/TimelineFilters'
 import TimelineCard from './components/TimelineCard'
@@ -34,63 +34,42 @@ export default function TimelineScreen({
                 switch (item.kind) {
                   case 'question':
                     return (
-                      <TimelineCard
+                      <Link
                         key={item.id}
-                        avatar={item.avatar}
-                        name={item.name}
-                        time={item.time}
+                        to="/scraps/$scrapId"
+                        params={{ scrapId: item.id }}
+                        className="block"
                       >
-                        <p className="text-slate-900 text-[13px] leading-relaxed">
-                          {item.text}{' '}
-                          {item.tag ? (
-                            <span className="text-blue-500 font-medium">
-                              {item.tag}
-                            </span>
-                          ) : null}
-                        </p>
-                        <div className="flex items-center gap-4 mt-2">
-                          <TimelineActionButton
-                            icon="favorite"
-                            count={item.likes}
-                          />
-                          {item.comments ? (
+                        <TimelineCard
+                          avatar={item.avatar}
+                          name={item.name}
+                          time={item.time}
+                        >
+                          <p className="text-slate-900 text-[13px] leading-relaxed">
+                            {item.text}{' '}
+                            {item.tag ? (
+                              <span className="text-blue-500 font-medium">
+                                {item.tag}
+                              </span>
+                            ) : null}
+                          </p>
+                          <div className="flex items-center gap-4 mt-2">
                             <TimelineActionButton
-                              icon="chat_bubble"
-                              count={item.comments}
-                              className="hover:text-blue-500"
+                              icon="favorite"
+                              count={item.likes}
+                              filled
+                              className="text-blue-500 hover:text-blue-600"
                             />
-                          ) : null}
-                        </div>
-                      </TimelineCard>
-                    )
-                  case 'quote':
-                    return (
-                      <TimelineCard
-                        key={item.id}
-                        avatar={item.avatar}
-                        name={item.name}
-                        time={item.time}
-                      >
-                        <p className="text-slate-900 text-[13px] leading-relaxed mb-2.5">
-                          {item.text}
-                        </p>
-                        <QuoteCard />
-                        <div className="flex items-center gap-4 mt-2">
-                          <TimelineActionButton
-                            icon="favorite"
-                            count={item.likes}
-                            filled
-                            className="text-blue-500 hover:text-blue-600"
-                          />
-                          {item.comments ? (
-                            <TimelineActionButton
-                              icon="chat_bubble"
-                              count={item.comments}
-                              className="hover:text-blue-500"
-                            />
-                          ) : null}
-                        </div>
-                      </TimelineCard>
+                            {item.comments ? (
+                              <TimelineActionButton
+                                icon="chat_bubble"
+                                count={item.comments}
+                                className="hover:text-blue-500"
+                              />
+                            ) : null}
+                          </div>
+                        </TimelineCard>
+                      </Link>
                     )
                   case 'official':
                     return (
@@ -104,29 +83,68 @@ export default function TimelineScreen({
                     )
                   case 'request':
                     return (
-                      <TimelineCard
+                      <Link
                         key={item.id}
-                        avatar={item.avatar}
-                        name={item.name}
-                        time={item.time}
+                        to="/scraps/$scrapId"
+                        params={{ scrapId: item.id }}
+                        className="block"
                       >
-                        <p className="text-slate-900 text-[13px] leading-relaxed">
-                          {item.text}
-                        </p>
-                        <div className="flex items-center gap-4 mt-2">
-                          <TimelineActionButton
-                            icon="favorite"
-                            count={item.likes}
-                          />
-                          {item.comments ? (
+                        <TimelineCard
+                          avatar={item.avatar}
+                          name={item.name}
+                          time={item.time}
+                        >
+                          <p className="text-slate-900 text-[13px] leading-relaxed">
+                            {item.text}
+                          </p>
+                          <div className="flex items-center gap-4 mt-2">
                             <TimelineActionButton
-                              icon="chat_bubble"
-                              count={item.comments}
-                              className="hover:text-blue-500"
+                              icon="favorite"
+                              count={item.likes}
                             />
-                          ) : null}
-                        </div>
-                      </TimelineCard>
+                            {item.comments ? (
+                              <TimelineActionButton
+                                icon="chat_bubble"
+                                count={item.comments}
+                                className="hover:text-blue-500"
+                              />
+                            ) : null}
+                          </div>
+                        </TimelineCard>
+                      </Link>
+                    )
+                  case 'quote':
+                    return (
+                      <Link
+                        key={item.id}
+                        to="/scraps/$scrapId"
+                        params={{ scrapId: item.id }}
+                        className="block"
+                      >
+                        <TimelineCard
+                          avatar={item.avatar}
+                          name={item.name}
+                          time={item.time}
+                        >
+                          <p className="text-slate-900 text-[13px] leading-relaxed mb-2.5">
+                            {item.text}
+                          </p>
+                          <QuoteCard />
+                          <div className="flex items-center gap-4 mt-2">
+                            <TimelineActionButton
+                              icon="favorite"
+                              count={item.likes}
+                            />
+                            {item.comments ? (
+                              <TimelineActionButton
+                                icon="chat_bubble"
+                                count={item.comments}
+                                className="hover:text-blue-500"
+                              />
+                            ) : null}
+                          </div>
+                        </TimelineCard>
+                      </Link>
                     )
                   default:
                     return null
@@ -136,8 +154,8 @@ export default function TimelineScreen({
       </main>
       <button
         className="absolute bottom-28 right-4 z-40 flex items-center justify-center size-14 bg-slate-900 text-white rounded-full shadow-xl hover:scale-105 active:scale-95 transition-all"
-        aria-label="Create post"
-        onClick={() => navigate({ to: '/posts/new' })}
+        aria-label="アーティファクトを作成"
+        onClick={() => navigate({ to: '/artifacts/new' })}
         type="button"
       >
         <MaterialIcon name="add" className="text-3xl" />

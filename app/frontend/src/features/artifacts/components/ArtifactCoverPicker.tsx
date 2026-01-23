@@ -1,6 +1,6 @@
 import MaterialIcon from '../../../components/MaterialIcon'
 
-export default function CoverPicker() {
+export default function ArtifactCoverPicker() {
   return (
     <div className="relative group cursor-pointer">
       <div className="w-full aspect-[21/9] rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 flex flex-col items-center justify-center gap-2 hover:bg-slate-50 hover:border-blue-400/50 transition-all group-hover:scale-[1.01]">
@@ -8,7 +8,7 @@ export default function CoverPicker() {
           <MaterialIcon name="add_photo_alternate" className="text-[20px]" />
         </div>
         <span className="text-xs font-bold text-slate-500 group-hover:text-slate-900">
-          Add Cover Image
+          カバー画像を追加
         </span>
       </div>
     </div>
