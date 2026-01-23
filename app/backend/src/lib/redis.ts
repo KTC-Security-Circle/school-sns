@@ -67,10 +67,13 @@ export const createSession = async <T>(
 
 /**
  * セッションを取得する
+ * 戻り値を T ではなく Session<T> に変更しました
  * @param sessionId セッションID
- * @returns 保存されたオブジェクト または null
+ * @returns Sessionオブジェクト ({ id, data }) または null
  */
-export const getSession = async <T>(sessionId: string): Promise<T | null> => {
+export const getSession = async <T>(
+  sessionId: string,
+): Promise<Session<T> | null> => {
   const key = `session:${sessionId}`
   const rawData = await redis.get(key)
 
@@ -78,8 +81,14 @@ export const getSession = async <T>(sessionId: string): Promise<T | null> => {
     return null
   }
 
-  // 文字列をオブジェクトに戻す
-  return JSON.parse(rawData) as T
+  // 保存されているのは data 部分のみなので、
+  // 取得時に id と組み合わせて Session<T> の形に復元する
+  const data = JSON.parse(rawData) as T
+
+  return {
+    id: sessionId,
+    data: data,
+  }
 }
 
 /**
