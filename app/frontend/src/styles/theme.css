@@ -12,7 +12,7 @@
   }
 
   .app-frame {
-    @apply relative flex min-h-screen w-full max-w-md flex-col md:max-w-full md:min-h-[calc(100vh-4rem)] md:rounded-[32px] md:overflow-hidden md:shadow-2xl;
+    @apply relative flex h-[100dvh] w-full max-w-md flex-col md:max-w-full md:min-h-[calc(100vh-4rem)] md:h-[calc(100vh-4rem)] md:rounded-[32px] md:overflow-hidden md:shadow-2xl;
   }
 
   .screen-header {

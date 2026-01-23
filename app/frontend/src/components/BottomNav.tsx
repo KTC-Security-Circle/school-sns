@@ -25,7 +25,7 @@ export default function BottomNav({ active, className }: BottomNavProps) {
   return (
     <nav
       className={cn(
-        'absolute bottom-0 left-0 right-0 w-full bg-white border-t border-slate-200 pb-[env(safe-area-inset-bottom)] z-30',
+        'w-full bg-white border-t border-slate-200 pb-[env(safe-area-inset-bottom)] shrink-0',
         className,
       )}
     >

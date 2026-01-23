@@ -1,9 +1,6 @@
-import { useNavigate } from '@tanstack/react-router'
 import MaterialIcon from '../../../components/MaterialIcon'
 
 export default function SearchHeader() {
-  const navigate = useNavigate()
-
   return (
     <>
       <div className="flex items-center gap-3 px-4 py-3">
@@ -23,28 +20,21 @@ export default function SearchHeader() {
             />
           </span>
         </div>
-        <button
-          className="text-slate-900 font-bold text-sm hover:opacity-70 transition-opacity whitespace-nowrap"
-          onClick={() => navigate({ to: '/' })}
-          type="button"
-        >
-          キャンセル
-        </button>
       </div>
-      <div className="px-4 pb-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        <button className="whitespace-nowrap px-4 py-1.5 rounded-full bg-slate-900 text-white text-[13px] font-bold shadow-md transition-transform active:scale-95 border border-transparent">
+      <div className="px-4 pt-1 pb-2 flex gap-2 overflow-x-auto scrollbar-hide">
+        <button className="whitespace-nowrap h-[30px] px-4 rounded-full bg-slate-900 text-white text-[11px] font-bold uppercase tracking-wide shadow-sm transition-transform active:scale-95 border border-transparent flex items-center justify-center">
           すべて
         </button>
-        <button className="whitespace-nowrap px-4 py-1.5 rounded-full bg-white text-slate-500 border border-slate-200 text-[13px] font-bold shadow-sm hover:bg-slate-50 transition-colors">
+        <button className="whitespace-nowrap h-[30px] px-4 rounded-full bg-white text-slate-500 border border-slate-200 text-[11px] font-bold uppercase tracking-wide shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center">
           ユーザー
         </button>
-        <button className="whitespace-nowrap px-4 py-1.5 rounded-full bg-white text-slate-500 border border-slate-200 text-[13px] font-bold shadow-sm hover:bg-slate-50 transition-colors">
+        <button className="whitespace-nowrap h-[30px] px-4 rounded-full bg-white text-slate-500 border border-slate-200 text-[11px] font-bold uppercase tracking-wide shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center">
           タグ
         </button>
-        <button className="whitespace-nowrap px-4 py-1.5 rounded-full bg-white text-slate-500 border border-slate-200 text-[13px] font-bold shadow-sm hover:bg-slate-50 transition-colors flex items-center gap-1">
+        <button className="whitespace-nowrap h-[30px] px-4 rounded-full bg-white text-slate-500 border border-slate-200 text-[11px] font-bold uppercase tracking-wide shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1">
           <MaterialIcon name="grid_view" className="text-[16px]" /> Artifacts
         </button>
-        <button className="whitespace-nowrap px-4 py-1.5 rounded-full bg-white text-slate-500 border border-slate-200 text-[13px] font-bold shadow-sm hover:bg-slate-50 transition-colors flex items-center gap-1">
+        <button className="whitespace-nowrap h-[30px] px-4 rounded-full bg-white text-slate-500 border border-slate-200 text-[11px] font-bold uppercase tracking-wide shadow-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-1">
           <MaterialIcon name="chat_bubble_outline" className="text-[16px]" />
           Scraps
         </button>

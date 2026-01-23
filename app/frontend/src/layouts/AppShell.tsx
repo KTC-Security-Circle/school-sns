@@ -14,6 +14,7 @@ export type AppShellConfig = {
   bottomNav?: BottomNavItem
   showBottomNav?: boolean
   disableShell?: boolean
+  fab?: ReactNode
 }
 
 type AppShellProps = {
@@ -28,6 +29,7 @@ export default function AppShell({ children }: AppShellProps) {
   const Header = shell.header
   const bottomNav = shell.bottomNav
   const showBottomNav = shell.showBottomNav ?? Boolean(bottomNav)
+  const fab = shell.fab
 
   if (shell.disableShell) {
     return <>{children}</>
@@ -36,13 +38,27 @@ export default function AppShell({ children }: AppShellProps) {
   return (
     <div className={cn('app-shell', shell.backgroundClassName)}>
       <PhoneFrame className={shell.frameClassName}>
-        {Header ? (
-          <ScreenHeader className={shell.headerClassName}>
-            <Header />
-          </ScreenHeader>
-        ) : null}
-        {children}
+        <main className="flex-1 w-full overflow-y-auto scrollbar-hide relative pb-safe">
+          {Header ? (
+            <ScreenHeader className={shell.headerClassName}>
+              <Header />
+            </ScreenHeader>
+          ) : null}
+          {children}
+        </main>
         {showBottomNav && bottomNav ? <BottomNav active={bottomNav} /> : null}
+        {fab ? (
+          <div
+            className={cn(
+              'absolute right-4 transition-all duration-300 z-40',
+              showBottomNav
+                ? 'bottom-[calc(80px+env(safe-area-inset-bottom))]'
+                : 'bottom-[calc(24px+env(safe-area-inset-bottom))]',
+            )}
+          >
+            {fab}
+          </div>
+        ) : null}
       </PhoneFrame>
     </div>
   )
