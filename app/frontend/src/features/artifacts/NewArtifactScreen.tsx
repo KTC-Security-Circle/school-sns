@@ -5,7 +5,7 @@ import ArtifactFooter from './components/ArtifactFooter'
 import ArtifactToolbar from './components/ArtifactToolbar'
 import ArtifactTypeSelector from './components/ArtifactTypeSelector'
 import ArtifactTitleField from './components/ArtifactTitleField'
-import type {ArtifactEditorType} from './components/ArtifactTypeSelector';
+import type { ArtifactEditorType } from './components/ArtifactTypeSelector'
 
 export default function NewArtifactScreen() {
   const [type, setType] = useState<ArtifactEditorType>('artifact')
