@@ -8,41 +8,34 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as SignupRouteImport } from './routes/signup'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as ArtifactsIndexRouteImport } from './routes/artifacts/index'
-import { Route as PostsNewRouteImport } from './routes/posts/new'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as ArtifactsArtifactIdRouteImport } from './routes/artifacts/$artifactId'
+import { createFileRoute } from '@tanstack/react-router'
 
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SearchRoute = SearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as TimelineRouteRouteImport } from './routes/timeline/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as TimelineScrapsIndexRouteImport } from './routes/timeline/scraps/index'
+import { Route as TimelineArtifactsIndexRouteImport } from './routes/timeline/artifacts/index'
+import { Route as SearchResultIndexRouteImport } from './routes/search/result/index'
+import { Route as ProfileIdUserNameIndexRouteImport } from './routes/profile/$id/$userName/index'
+import { Route as TimelineScrapsEditIdIndexRouteImport } from './routes/timeline/scraps/edit/$id/index'
+import { Route as TimelineScrapsDetailIdIndexRouteImport } from './routes/timeline/scraps/detail/$id/index'
+import { Route as TimelineArtifactsEditIdIndexRouteImport } from './routes/timeline/artifacts/edit/$id/index'
+import { Route as TimelineArtifactsDetailIdIndexRouteImport } from './routes/timeline/artifacts/detail/$id/index'
+
+const SettingsIndexLazyRouteImport = createFileRoute('/settings/')()
+const SearchIndexLazyRouteImport = createFileRoute('/search/')()
+const AuthSignupIndexLazyRouteImport = createFileRoute('/auth/signup/')()
+const AuthLoginIndexLazyRouteImport = createFileRoute('/auth/login/')()
+const TimelineScrapsCreateIndexLazyRouteImport = createFileRoute(
+  '/timeline/scraps/create/',
+)()
+const TimelineArtifactsCreateIndexLazyRouteImport = createFileRoute(
+  '/timeline/artifacts/create/',
+)()
+
+const TimelineRouteRoute = TimelineRouteRouteImport.update({
+  id: '/timeline',
+  path: '/timeline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -50,151 +43,247 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArtifactsIndexRoute = ArtifactsIndexRouteImport.update({
+const SettingsIndexLazyRoute = SettingsIndexLazyRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/settings/index.lazy').then((d) => d.Route),
+)
+const SearchIndexLazyRoute = SearchIndexLazyRouteImport.update({
+  id: '/search/',
+  path: '/search/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/search/index.lazy').then((d) => d.Route))
+const AuthSignupIndexLazyRoute = AuthSignupIndexLazyRouteImport.update({
+  id: '/auth/signup/',
+  path: '/auth/signup/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/auth/signup/index.lazy').then((d) => d.Route),
+)
+const AuthLoginIndexLazyRoute = AuthLoginIndexLazyRouteImport.update({
+  id: '/auth/login/',
+  path: '/auth/login/',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/auth/login/index.lazy').then((d) => d.Route),
+)
+const TimelineScrapsIndexRoute = TimelineScrapsIndexRouteImport.update({
+  id: '/scraps/',
+  path: '/scraps/',
+  getParentRoute: () => TimelineRouteRoute,
+} as any).lazy(() =>
+  import('./routes/timeline/scraps/index.lazy').then((d) => d.Route),
+)
+const TimelineArtifactsIndexRoute = TimelineArtifactsIndexRouteImport.update({
   id: '/artifacts/',
   path: '/artifacts/',
+  getParentRoute: () => TimelineRouteRoute,
+} as any).lazy(() =>
+  import('./routes/timeline/artifacts/index.lazy').then((d) => d.Route),
+)
+const SearchResultIndexRoute = SearchResultIndexRouteImport.update({
+  id: '/search/result/',
+  path: '/search/result/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const PostsNewRoute = PostsNewRouteImport.update({
-  id: '/posts/new',
-  path: '/posts/new',
+} as any).lazy(() =>
+  import('./routes/search/result/index.lazy').then((d) => d.Route),
+)
+const TimelineScrapsCreateIndexLazyRoute =
+  TimelineScrapsCreateIndexLazyRouteImport.update({
+    id: '/scraps/create/',
+    path: '/scraps/create/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/scraps/create/index.lazy').then((d) => d.Route),
+  )
+const TimelineArtifactsCreateIndexLazyRoute =
+  TimelineArtifactsCreateIndexLazyRouteImport.update({
+    id: '/artifacts/create/',
+    path: '/artifacts/create/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/artifacts/create/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const ProfileIdUserNameIndexRoute = ProfileIdUserNameIndexRouteImport.update({
+  id: '/profile/$id/$userName/',
+  path: '/profile/$id/$userName/',
   getParentRoute: () => rootRouteImport,
-} as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ArtifactsArtifactIdRoute = ArtifactsArtifactIdRouteImport.update({
-  id: '/artifacts/$artifactId',
-  path: '/artifacts/$artifactId',
-  getParentRoute: () => rootRouteImport,
-} as any)
+} as any).lazy(() =>
+  import('./routes/profile/$id/$userName/index.lazy').then((d) => d.Route),
+)
+const TimelineScrapsEditIdIndexRoute =
+  TimelineScrapsEditIdIndexRouteImport.update({
+    id: '/scraps/edit/$id/',
+    path: '/scraps/edit/$id/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/scraps/edit/$id/index.lazy').then((d) => d.Route),
+  )
+const TimelineScrapsDetailIdIndexRoute =
+  TimelineScrapsDetailIdIndexRouteImport.update({
+    id: '/scraps/detail/$id/',
+    path: '/scraps/detail/$id/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/scraps/detail/$id/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const TimelineArtifactsEditIdIndexRoute =
+  TimelineArtifactsEditIdIndexRouteImport.update({
+    id: '/artifacts/edit/$id/',
+    path: '/artifacts/edit/$id/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/artifacts/edit/$id/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+const TimelineArtifactsDetailIdIndexRoute =
+  TimelineArtifactsDetailIdIndexRouteImport.update({
+    id: '/artifacts/detail/$id/',
+    path: '/artifacts/detail/$id/',
+    getParentRoute: () => TimelineRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/timeline/artifacts/detail/$id/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/signup': typeof SignupRoute
-  '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
-  '/artifacts': typeof ArtifactsIndexRoute
+  '/timeline': typeof TimelineRouteRouteWithChildren
+  '/search/': typeof SearchIndexLazyRoute
+  '/settings/': typeof SettingsIndexLazyRoute
+  '/search/result/': typeof SearchResultIndexRoute
+  '/timeline/artifacts/': typeof TimelineArtifactsIndexRoute
+  '/timeline/scraps/': typeof TimelineScrapsIndexRoute
+  '/auth/login/': typeof AuthLoginIndexLazyRoute
+  '/auth/signup/': typeof AuthSignupIndexLazyRoute
+  '/profile/$id/$userName/': typeof ProfileIdUserNameIndexRoute
+  '/timeline/artifacts/create/': typeof TimelineArtifactsCreateIndexLazyRoute
+  '/timeline/scraps/create/': typeof TimelineScrapsCreateIndexLazyRoute
+  '/timeline/artifacts/detail/$id/': typeof TimelineArtifactsDetailIdIndexRoute
+  '/timeline/artifacts/edit/$id/': typeof TimelineArtifactsEditIdIndexRoute
+  '/timeline/scraps/detail/$id/': typeof TimelineScrapsDetailIdIndexRoute
+  '/timeline/scraps/edit/$id/': typeof TimelineScrapsEditIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/signup': typeof SignupRoute
-  '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
-  '/artifacts': typeof ArtifactsIndexRoute
+  '/timeline': typeof TimelineRouteRouteWithChildren
+  '/search': typeof SearchIndexLazyRoute
+  '/settings': typeof SettingsIndexLazyRoute
+  '/search/result': typeof SearchResultIndexRoute
+  '/timeline/artifacts': typeof TimelineArtifactsIndexRoute
+  '/timeline/scraps': typeof TimelineScrapsIndexRoute
+  '/auth/login': typeof AuthLoginIndexLazyRoute
+  '/auth/signup': typeof AuthSignupIndexLazyRoute
+  '/profile/$id/$userName': typeof ProfileIdUserNameIndexRoute
+  '/timeline/artifacts/create': typeof TimelineArtifactsCreateIndexLazyRoute
+  '/timeline/scraps/create': typeof TimelineScrapsCreateIndexLazyRoute
+  '/timeline/artifacts/detail/$id': typeof TimelineArtifactsDetailIdIndexRoute
+  '/timeline/artifacts/edit/$id': typeof TimelineArtifactsEditIdIndexRoute
+  '/timeline/scraps/detail/$id': typeof TimelineScrapsDetailIdIndexRoute
+  '/timeline/scraps/edit/$id': typeof TimelineScrapsEditIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/login': typeof LoginRoute
-  '/profile': typeof ProfileRoute
-  '/search': typeof SearchRoute
-  '/settings': typeof SettingsRoute
-  '/signup': typeof SignupRoute
-  '/artifacts/$artifactId': typeof ArtifactsArtifactIdRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
-  '/posts/new': typeof PostsNewRoute
-  '/artifacts/': typeof ArtifactsIndexRoute
+  '/timeline': typeof TimelineRouteRouteWithChildren
+  '/search/': typeof SearchIndexLazyRoute
+  '/settings/': typeof SettingsIndexLazyRoute
+  '/search/result/': typeof SearchResultIndexRoute
+  '/timeline/artifacts/': typeof TimelineArtifactsIndexRoute
+  '/timeline/scraps/': typeof TimelineScrapsIndexRoute
+  '/auth/login/': typeof AuthLoginIndexLazyRoute
+  '/auth/signup/': typeof AuthSignupIndexLazyRoute
+  '/profile/$id/$userName/': typeof ProfileIdUserNameIndexRoute
+  '/timeline/artifacts/create/': typeof TimelineArtifactsCreateIndexLazyRoute
+  '/timeline/scraps/create/': typeof TimelineScrapsCreateIndexLazyRoute
+  '/timeline/artifacts/detail/$id/': typeof TimelineArtifactsDetailIdIndexRoute
+  '/timeline/artifacts/edit/$id/': typeof TimelineArtifactsEditIdIndexRoute
+  '/timeline/scraps/detail/$id/': typeof TimelineScrapsDetailIdIndexRoute
+  '/timeline/scraps/edit/$id/': typeof TimelineScrapsEditIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/login'
-    | '/profile'
-    | '/search'
-    | '/settings'
-    | '/signup'
-    | '/artifacts/$artifactId'
-    | '/demo/tanstack-query'
-    | '/posts/new'
-    | '/artifacts'
+    | '/timeline'
+    | '/search/'
+    | '/settings/'
+    | '/search/result/'
+    | '/timeline/artifacts/'
+    | '/timeline/scraps/'
+    | '/auth/login/'
+    | '/auth/signup/'
+    | '/profile/$id/$userName/'
+    | '/timeline/artifacts/create/'
+    | '/timeline/scraps/create/'
+    | '/timeline/artifacts/detail/$id/'
+    | '/timeline/artifacts/edit/$id/'
+    | '/timeline/scraps/detail/$id/'
+    | '/timeline/scraps/edit/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/login'
-    | '/profile'
+    | '/timeline'
     | '/search'
     | '/settings'
-    | '/signup'
-    | '/artifacts/$artifactId'
-    | '/demo/tanstack-query'
-    | '/posts/new'
-    | '/artifacts'
+    | '/search/result'
+    | '/timeline/artifacts'
+    | '/timeline/scraps'
+    | '/auth/login'
+    | '/auth/signup'
+    | '/profile/$id/$userName'
+    | '/timeline/artifacts/create'
+    | '/timeline/scraps/create'
+    | '/timeline/artifacts/detail/$id'
+    | '/timeline/artifacts/edit/$id'
+    | '/timeline/scraps/detail/$id'
+    | '/timeline/scraps/edit/$id'
   id:
     | '__root__'
     | '/'
-    | '/login'
-    | '/profile'
-    | '/search'
-    | '/settings'
-    | '/signup'
-    | '/artifacts/$artifactId'
-    | '/demo/tanstack-query'
-    | '/posts/new'
-    | '/artifacts/'
+    | '/timeline'
+    | '/search/'
+    | '/settings/'
+    | '/search/result/'
+    | '/timeline/artifacts/'
+    | '/timeline/scraps/'
+    | '/auth/login/'
+    | '/auth/signup/'
+    | '/profile/$id/$userName/'
+    | '/timeline/artifacts/create/'
+    | '/timeline/scraps/create/'
+    | '/timeline/artifacts/detail/$id/'
+    | '/timeline/artifacts/edit/$id/'
+    | '/timeline/scraps/detail/$id/'
+    | '/timeline/scraps/edit/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LoginRoute: typeof LoginRoute
-  ProfileRoute: typeof ProfileRoute
-  SearchRoute: typeof SearchRoute
-  SettingsRoute: typeof SettingsRoute
-  SignupRoute: typeof SignupRoute
-  ArtifactsArtifactIdRoute: typeof ArtifactsArtifactIdRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
-  PostsNewRoute: typeof PostsNewRoute
-  ArtifactsIndexRoute: typeof ArtifactsIndexRoute
+  TimelineRouteRoute: typeof TimelineRouteRouteWithChildren
+  SearchIndexLazyRoute: typeof SearchIndexLazyRoute
+  SettingsIndexLazyRoute: typeof SettingsIndexLazyRoute
+  SearchResultIndexRoute: typeof SearchResultIndexRoute
+  AuthLoginIndexLazyRoute: typeof AuthLoginIndexLazyRoute
+  AuthSignupIndexLazyRoute: typeof AuthSignupIndexLazyRoute
+  ProfileIdUserNameIndexRoute: typeof ProfileIdUserNameIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/timeline': {
+      id: '/timeline'
+      path: '/timeline'
+      fullPath: '/timeline'
+      preLoaderRoute: typeof TimelineRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -204,48 +293,142 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/artifacts/': {
-      id: '/artifacts/'
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search/': {
+      id: '/search/'
+      path: '/search'
+      fullPath: '/search/'
+      preLoaderRoute: typeof SearchIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/signup/': {
+      id: '/auth/signup/'
+      path: '/auth/signup'
+      fullPath: '/auth/signup/'
+      preLoaderRoute: typeof AuthSignupIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login/': {
+      id: '/auth/login/'
+      path: '/auth/login'
+      fullPath: '/auth/login/'
+      preLoaderRoute: typeof AuthLoginIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/timeline/scraps/': {
+      id: '/timeline/scraps/'
+      path: '/scraps'
+      fullPath: '/timeline/scraps/'
+      preLoaderRoute: typeof TimelineScrapsIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/timeline/artifacts/': {
+      id: '/timeline/artifacts/'
       path: '/artifacts'
-      fullPath: '/artifacts'
-      preLoaderRoute: typeof ArtifactsIndexRouteImport
+      fullPath: '/timeline/artifacts/'
+      preLoaderRoute: typeof TimelineArtifactsIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/search/result/': {
+      id: '/search/result/'
+      path: '/search/result'
+      fullPath: '/search/result/'
+      preLoaderRoute: typeof SearchResultIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/posts/new': {
-      id: '/posts/new'
-      path: '/posts/new'
-      fullPath: '/posts/new'
-      preLoaderRoute: typeof PostsNewRouteImport
+    '/timeline/scraps/create/': {
+      id: '/timeline/scraps/create/'
+      path: '/scraps/create'
+      fullPath: '/timeline/scraps/create/'
+      preLoaderRoute: typeof TimelineScrapsCreateIndexLazyRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/timeline/artifacts/create/': {
+      id: '/timeline/artifacts/create/'
+      path: '/artifacts/create'
+      fullPath: '/timeline/artifacts/create/'
+      preLoaderRoute: typeof TimelineArtifactsCreateIndexLazyRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/profile/$id/$userName/': {
+      id: '/profile/$id/$userName/'
+      path: '/profile/$id/$userName'
+      fullPath: '/profile/$id/$userName/'
+      preLoaderRoute: typeof ProfileIdUserNameIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
+    '/timeline/scraps/edit/$id/': {
+      id: '/timeline/scraps/edit/$id/'
+      path: '/scraps/edit/$id'
+      fullPath: '/timeline/scraps/edit/$id/'
+      preLoaderRoute: typeof TimelineScrapsEditIdIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
     }
-    '/artifacts/$artifactId': {
-      id: '/artifacts/$artifactId'
-      path: '/artifacts/$artifactId'
-      fullPath: '/artifacts/$artifactId'
-      preLoaderRoute: typeof ArtifactsArtifactIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/timeline/scraps/detail/$id/': {
+      id: '/timeline/scraps/detail/$id/'
+      path: '/scraps/detail/$id'
+      fullPath: '/timeline/scraps/detail/$id/'
+      preLoaderRoute: typeof TimelineScrapsDetailIdIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/timeline/artifacts/edit/$id/': {
+      id: '/timeline/artifacts/edit/$id/'
+      path: '/artifacts/edit/$id'
+      fullPath: '/timeline/artifacts/edit/$id/'
+      preLoaderRoute: typeof TimelineArtifactsEditIdIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
+    }
+    '/timeline/artifacts/detail/$id/': {
+      id: '/timeline/artifacts/detail/$id/'
+      path: '/artifacts/detail/$id'
+      fullPath: '/timeline/artifacts/detail/$id/'
+      preLoaderRoute: typeof TimelineArtifactsDetailIdIndexRouteImport
+      parentRoute: typeof TimelineRouteRoute
     }
   }
 }
 
+interface TimelineRouteRouteChildren {
+  TimelineArtifactsIndexRoute: typeof TimelineArtifactsIndexRoute
+  TimelineScrapsIndexRoute: typeof TimelineScrapsIndexRoute
+  TimelineArtifactsCreateIndexLazyRoute: typeof TimelineArtifactsCreateIndexLazyRoute
+  TimelineScrapsCreateIndexLazyRoute: typeof TimelineScrapsCreateIndexLazyRoute
+  TimelineArtifactsDetailIdIndexRoute: typeof TimelineArtifactsDetailIdIndexRoute
+  TimelineArtifactsEditIdIndexRoute: typeof TimelineArtifactsEditIdIndexRoute
+  TimelineScrapsDetailIdIndexRoute: typeof TimelineScrapsDetailIdIndexRoute
+  TimelineScrapsEditIdIndexRoute: typeof TimelineScrapsEditIdIndexRoute
+}
+
+const TimelineRouteRouteChildren: TimelineRouteRouteChildren = {
+  TimelineArtifactsIndexRoute: TimelineArtifactsIndexRoute,
+  TimelineScrapsIndexRoute: TimelineScrapsIndexRoute,
+  TimelineArtifactsCreateIndexLazyRoute: TimelineArtifactsCreateIndexLazyRoute,
+  TimelineScrapsCreateIndexLazyRoute: TimelineScrapsCreateIndexLazyRoute,
+  TimelineArtifactsDetailIdIndexRoute: TimelineArtifactsDetailIdIndexRoute,
+  TimelineArtifactsEditIdIndexRoute: TimelineArtifactsEditIdIndexRoute,
+  TimelineScrapsDetailIdIndexRoute: TimelineScrapsDetailIdIndexRoute,
+  TimelineScrapsEditIdIndexRoute: TimelineScrapsEditIdIndexRoute,
+}
+
+const TimelineRouteRouteWithChildren = TimelineRouteRoute._addFileChildren(
+  TimelineRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LoginRoute: LoginRoute,
-  ProfileRoute: ProfileRoute,
-  SearchRoute: SearchRoute,
-  SettingsRoute: SettingsRoute,
-  SignupRoute: SignupRoute,
-  ArtifactsArtifactIdRoute: ArtifactsArtifactIdRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
-  PostsNewRoute: PostsNewRoute,
-  ArtifactsIndexRoute: ArtifactsIndexRoute,
+  TimelineRouteRoute: TimelineRouteRouteWithChildren,
+  SearchIndexLazyRoute: SearchIndexLazyRoute,
+  SettingsIndexLazyRoute: SettingsIndexLazyRoute,
+  SearchResultIndexRoute: SearchResultIndexRoute,
+  AuthLoginIndexLazyRoute: AuthLoginIndexLazyRoute,
+  AuthSignupIndexLazyRoute: AuthSignupIndexLazyRoute,
+  ProfileIdUserNameIndexRoute: ProfileIdUserNameIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
