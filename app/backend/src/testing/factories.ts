@@ -5,12 +5,14 @@ import { prisma } from '../lib/prisma.js'
 /**
  * テスト用の共通ユーザー作成関数
  */
-export const createTestUser = async (options: {
-  email?: string
-  name?: string
-  password?: string
-  role: UserRole
-}) => {
+export const createTestUser = async (
+  options: {
+    email?: string
+    name?: string
+    password?: string
+    role?: UserRole
+  } = {},
+) => {
   // 指定がなければランダムなメールアドレスを生成
   const email =
     options.email ?? `test-${Math.random().toString(36).slice(2)}@example.com`
