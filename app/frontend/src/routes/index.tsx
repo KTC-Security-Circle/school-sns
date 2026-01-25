@@ -1,19 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router'
-import TimelineScreen from '../features/timeline/TimelineScreen'
-import TimelineHeader from '../features/timeline/components/TimelineHeader'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+import { useFetchSelfInfoOptions } from '@/api/routes/users'
 
 export const Route = createFileRoute('/')({
-  component: RouteComponent,
-  staticData: {
-    shell: {
-      header: TimelineHeader,
-      bottomNav: 'scraps',
-      backgroundClassName: 'bg-white',
-      frameClassName: 'bg-white border-x border-slate-200 shadow-2xl',
-    },
+  beforeLoad: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData(useFetchSelfInfoOptions())
+    } catch (_) {
+      throw redirect({
+        to: '/auth/login',
+      })
+    }
+    throw redirect({
+      to: '/timeline/scraps',
+    })
   },
 })
-
-function RouteComponent() {
-  return <TimelineScreen variant="scrap" />
-}

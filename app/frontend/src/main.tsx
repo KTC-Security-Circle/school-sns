@@ -9,11 +9,12 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import type { ApiError } from '@/api/shared/error.ts'
 
 // Create a new router instance
 
 const TanStackQueryProviderContext = TanStackQueryProvider.getContext()
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   context: {
     ...TanStackQueryProviderContext,
@@ -28,6 +29,12 @@ const router = createRouter({
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
+  }
+}
+
+declare module '@tanstack/react-query' {
+  interface Register {
+    defaultError: ApiError
   }
 }
 
