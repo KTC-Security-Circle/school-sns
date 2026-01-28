@@ -1,5 +1,5 @@
 import argon2 from 'argon2'
-import type { UserRole } from '../../generated/prisma/enums.js'
+import type { UserRole } from '../lib/enum.js'
 import { prisma } from '../lib/prisma.js'
 
 /**
@@ -14,8 +14,7 @@ export const createTestUser = async (
   } = {},
 ) => {
   // 指定がなければランダムなメールアドレスを生成
-  const email =
-    options.email ?? `test-${Math.random().toString(36).slice(2)}@example.com`
+  const email = options.email ?? `test-${crypto.randomUUID()}@example.com`
 
   const plainPassword = options.password ?? 'password123'
   const passwordHash = await argon2.hash(plainPassword)
@@ -24,7 +23,7 @@ export const createTestUser = async (
   const user = await prisma.users.create({
     data: {
       email: email,
-      userName: options.name ?? 'Test User',
+      userName: options.name ?? `test-${crypto.randomUUID()}-user`,
       passwordHash: passwordHash,
       role: options.role,
     },
