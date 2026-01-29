@@ -3,11 +3,11 @@ import { act, renderHook } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { useProfileEditForm } from './useProfileEditForm'
 
-const mutateAsync = vi.fn().mockResolvedValue({})
+const mutate = vi.fn()
 
 vi.mock('@/api/routes/users', () => {
   return {
-    useUpdateProfileMutation: () => ({ mutateAsync }),
+    useUpdateProfileMutation: () => ({ mutate, isPending: false }),
   }
 })
 
@@ -38,7 +38,7 @@ describe('useProfileEditForm', () => {
       await result.current.form.handleSubmit()
     })
 
-    expect(mutateAsync).toHaveBeenCalledWith({
+    expect(mutate).toHaveBeenCalledWith({
       userName: 'Alice',
       bio: 'Hello world',
       avatarUrl: null,

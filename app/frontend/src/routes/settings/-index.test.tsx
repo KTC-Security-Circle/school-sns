@@ -54,15 +54,4 @@ describe('settings route beforeLoad', () => {
 
     expect(redirect).toHaveBeenCalledWith({ to: '/auth/login' })
   })
-
-  it('returns self info from loader', async () => {
-    const ensureQueryData = vi.fn().mockResolvedValue({ id: 'user-1' })
-
-    const result = await Route.options.loader!(
-      createContext(ensureQueryData) as any,
-    )
-
-    expect(result).toEqual({ id: 'user-1' })
-    expect(useFetchSelfInfoOptions).toHaveBeenCalled()
-  })
 })

@@ -4,11 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, expect, it, vi } from 'vitest'
 import ProfileEditForm from './index.tsx'
 
-const mutateAsync = vi.fn().mockResolvedValue({})
+const mutate = vi.fn()
 
 vi.mock('@/api/routes/users', () => {
   return {
-    useUpdateProfileMutation: () => ({ mutateAsync }),
+    useUpdateProfileMutation: () => ({ mutate, isPending: false }),
   }
 })
 
@@ -47,7 +47,7 @@ describe('ProfileEditForm', () => {
     })
 
     await waitFor(() => {
-      expect(mutateAsync).toHaveBeenCalledWith({
+      expect(mutate).toHaveBeenCalledWith({
         userName: 'Alice',
         bio: 'Hello',
         avatarUrl: 'https://example.com/avatar.png',
