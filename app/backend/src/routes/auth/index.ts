@@ -132,9 +132,10 @@ export const auth = new Hono<{ Variables: AuthVariables }>()
     async (c) => {
       // 1. Googleからユーザー情報を取得
       const googleUser = c.var['user-google']
+      const token = c.var.token
 
-      if (!googleUser) {
-        return c.json({ message: 'Google authentication failed' }, 401)
+      if (!googleUser || !token) {
+        return c.json({ error: 'Auth failed' }, 401)
       }
 
       // 2. Service層: DBからユーザーを検索、または新規作成
@@ -143,6 +144,9 @@ export const auth = new Hono<{ Variables: AuthVariables }>()
         email: googleUser.email,
         name: googleUser.name,
         picture: googleUser.picture,
+        accessToken: token.token,
+        refreshToken: token.refresh_token,
+        expiresIn: token.expires_in,
       })
 
       if (result.type === 'Failure') {
