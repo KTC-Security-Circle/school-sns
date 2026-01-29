@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import ProfileSection from './index'
+import ProfileSection from './index.tsx'
 
 vi.mock('../ProfileEditForm', () => {
   return {
@@ -29,7 +29,7 @@ describe('ProfileSection', () => {
     render(<ProfileSection user={baseUser} />)
 
     fireEvent.click(
-      screen.getAllByRole('button', { name: 'プロフィールを編集' })[0],
+      screen.getAllByRole('button', { name: '自己紹介を編集' })[0],
     )
 
     expect(screen.getByText('編集フォーム')).toBeTruthy()

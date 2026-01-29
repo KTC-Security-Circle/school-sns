@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
-import LogoutSection from './index'
+import LogoutSection from './index.tsx'
 
 const mutateAsync = vi.fn()
 

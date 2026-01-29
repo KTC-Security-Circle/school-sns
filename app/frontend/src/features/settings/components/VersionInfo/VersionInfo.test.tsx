@@ -1,7 +1,7 @@
 /** @vitest-environment jsdom */
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import VersionInfo from './index'
+import VersionInfo from './index.tsx'
 
 describe('VersionInfo', () => {
   it('renders version label', () => {

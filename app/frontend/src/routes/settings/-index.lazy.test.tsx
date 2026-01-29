@@ -3,19 +3,19 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { describe, expect, it, vi } from 'vitest'
 import { SettingsPage } from './index.lazy'
-import { createLazyFileRouteMock } from '@/testing/routerMocks'
 
-const userData = {
+const userData = vi.hoisted(() => ({
   id: 'user-1',
   userName: 'Test User',
   bio: 'こんにちは',
   avatarUrl: 'https://example.com/avatar.png',
-}
+}))
 
 const mutateAsync = vi.fn().mockResolvedValue({})
 const logoutAsync = vi.fn().mockResolvedValue({})
 
-vi.mock('@tanstack/react-router', () => {
+vi.mock('@tanstack/react-router', async () => {
+  const { createLazyFileRouteMock } = await import('@/testing/routerMocks')
   return {
     createLazyFileRoute: createLazyFileRouteMock(userData),
     useNavigate: () => vi.fn(),
@@ -25,6 +25,10 @@ vi.mock('@tanstack/react-router', () => {
 vi.mock('@/api/routes/users', () => {
   return {
     useUpdateProfileMutation: () => ({ mutateAsync }),
+    useFetchSelfInfoOptions: () => ({
+      queryKey: ['users', 'me'],
+      queryFn: vi.fn().mockResolvedValue(userData),
+    }),
   }
 })
 
@@ -56,10 +60,10 @@ describe('SettingsPage', () => {
   it('allows entering edit mode and opening logout dialog', async () => {
     renderPage()
 
-    const editButton = await screen.findByRole('button', {
+    const editButtons = await screen.findAllByRole('button', {
       name: '自己紹介を編集',
     })
-    fireEvent.click(editButton)
+    fireEvent.click(editButtons[0])
     expect(screen.getByText('保存')).toBeTruthy()
 
     const logoutButton = (
