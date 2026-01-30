@@ -1,4 +1,7 @@
-import type { GoogleUser } from '@hono/oauth-providers/google'
+import type {
+  GoogleUser,
+  GoogleTokenResponse,
+} from '@hono/oauth-providers/google'
 import { getCookie } from 'hono/cookie'
 import { createMiddleware } from 'hono/factory'
 import { authCookie } from '../lib/authCookie.js'
@@ -11,6 +14,7 @@ interface SessionUser {
 
 export interface Variables {
   'user-google'?: GoogleUser
+  token?: GoogleTokenResponse
   user: SessionUser
 }
 

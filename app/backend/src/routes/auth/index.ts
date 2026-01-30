@@ -128,14 +128,14 @@ export const auth = new Hono<{ Variables: AuthVariables }>()
       client_id: env.GOOGLE_ID,
       client_secret: env.GOOGLE_SECRET,
       scope: ['openid', 'email', 'profile'],
-      // redirect_uri: env.GOOGLE_REDIRECT_URI,
     }),
     async (c) => {
       // 1. Googleからユーザー情報を取得
       const googleUser = c.var['user-google']
+      const token = c.var.token
 
-      if (!googleUser) {
-        return c.json({ message: 'Google authentication failed' }, 401)
+      if (!googleUser || !token) {
+        return c.json({ error: 'Auth failed' }, 401)
       }
 
       // 2. Service層: DBからユーザーを検索、または新規作成
@@ -144,6 +144,9 @@ export const auth = new Hono<{ Variables: AuthVariables }>()
         email: googleUser.email,
         name: googleUser.name,
         picture: googleUser.picture,
+        accessToken: token.token,
+        refreshToken: token.refresh_token,
+        expiresIn: token.expires_in,
       })
 
       if (result.type === 'Failure') {
@@ -171,11 +174,11 @@ export const auth = new Hono<{ Variables: AuthVariables }>()
         maxAge: 60 * 60 * 24, // 1日
       })
 
-      // 5. ログイン成功レスポンス
-      return c.json({
-        message: 'Google Login Successful',
-        user: user,
-      })
+      // 5. ログイン成功時リダイレクト
+      const redirectUrl = env.GOOGLE_REDIRECT_URI
+        ? env.GOOGLE_REDIRECT_URI
+        : '/'
+      return c.redirect(redirectUrl)
     },
   )
 

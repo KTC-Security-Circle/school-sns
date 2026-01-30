@@ -2,8 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
+  output   = "../../generated/prisma/sqlite"
 }
 
 datasource db {
@@ -169,7 +169,7 @@ model Mentions {
 
 model TagScraps {
   id String @id @default(uuid(4))
-  scrap Scraps @relation(fields: [scrapId], references: [id], onDelete: Cascade)
+  scrap Scraps @relation(fields: [scrapId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   scrapId String
   tag Tags @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId String
