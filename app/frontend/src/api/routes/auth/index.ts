@@ -5,20 +5,15 @@ import type {
 } from '@/api/routes/auth/type'
 import { usersKeys } from '@/api/routes/users/key'
 import { apiBaseUrl, apiClient } from '@/api/shared/apiClient'
-import { ApiError } from '@/api/shared/error'
+import { parseApiError } from '@/api/shared/error'
 
 const useLoginMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (body: LoginRequestBody) => {
       const res = await apiClient.auth.login.$post({ json: body })
-
       if (!res.ok) {
-        const data = await res.json()
-        if ('message' in data) {
-          throw new ApiError(data.message, res.status)
-        }
-        throw new ApiError('An unknown error occurred', res.status)
+        return await parseApiError(res)
       }
       return await res.json()
     },
@@ -42,13 +37,8 @@ const useSignupMutation = () => {
   return useMutation({
     mutationFn: async (body: SignupRequestBody) => {
       const res = await apiClient.auth.signup.$post({ json: body })
-
       if (!res.ok) {
-        const data = await res.json()
-        if ('message' in data) {
-          throw new ApiError(data.message, res.status)
-        }
-        throw new ApiError('An unknown error occurred', res.status)
+        return await parseApiError(res)
       }
       return await res.json()
     },
@@ -58,4 +48,23 @@ const useSignupMutation = () => {
   })
 }
 
-export { useLoginMutation, useGoogleLoginMutation, useSignupMutation }
+const useLogoutMutation = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async () => {
+      // ログアウトAPIは200を返すだけなので、特にレスポンスを処理しない
+      return await apiClient.auth.logout.$post()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: usersKeys.me() })
+    },
+  })
+}
+
+export {
+  useLoginMutation,
+  useGoogleLoginMutation,
+  useSignupMutation,
+  useLogoutMutation,
+}

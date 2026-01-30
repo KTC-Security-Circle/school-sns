@@ -4,7 +4,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { SignupPage } from './index.lazy'
 
-vi.mock('@tanstack/react-router', () => {
+vi.mock('@tanstack/react-router', async () => {
+  const { createLazyFileRouteMock } = await import('@/testing/routerMocks')
   return {
     Link: ({ to, children, ...rest }: any) => {
       const href = typeof to === 'string' ? to : to?.to
@@ -14,7 +15,7 @@ vi.mock('@tanstack/react-router', () => {
         </a>
       )
     },
-    createLazyFileRoute: () => (options: any) => options,
+    createLazyFileRoute: createLazyFileRouteMock(),
     useNavigate: () => vi.fn(),
   }
 })

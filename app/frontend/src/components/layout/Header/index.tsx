@@ -1,4 +1,4 @@
-import { useMatch, useMatches } from '@tanstack/react-router'
+import { Link, useMatch, useMatches } from '@tanstack/react-router'
 
 import type { AppPath } from '@/types'
 import BackArrow from '@/components/ui/BackArrow'
@@ -7,7 +7,7 @@ import { cn } from '@/utils/cn'
 
 type TitlePath = Extract<
   NonNullable<AppPath['to']>,
-  '/auth/login' | '/auth/signup' | '/timeline/artifacts'
+  '/auth/login' | '/auth/signup' | '/timeline/artifacts' | '/settings'
 >
 
 interface PathWithTitle {
@@ -19,6 +19,7 @@ const HeaderTitles: Array<PathWithTitle> = [
   { path: '/auth/login', title: 'ログイン' },
   { path: '/auth/signup', title: '新規登録' },
   { path: '/timeline/artifacts', title: '記事' },
+  { path: '/settings', title: '設定' },
 ]
 
 export default function Header() {
@@ -56,7 +57,11 @@ export default function Header() {
       <h1 className="font-bold text-lg">
         {currentTitle !== undefined ? currentTitle.title : 'Campus Link'}
       </h1>
-      {!isAuthPage && <Avatar className="h-full py-1" />}
+      {!isAuthPage && (
+        <Link to="/settings" aria-label="設定へ移動">
+          <Avatar className="h-full py-1" />
+        </Link>
+      )}
     </header>
   )
 }

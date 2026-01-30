@@ -23,6 +23,7 @@ export const useSignupForm = () => {
       name: '',
     },
     validators: {
+      onChange: signupFormSchema,
       onSubmit: signupFormSchema,
     },
     onSubmit: ({ value }) => {
@@ -33,19 +34,26 @@ export const useSignupForm = () => {
         ...value,
         name: trimmedName ? trimmedName : undefined,
       }
-
-      signupMutation.mutate(payload, {
-        onSuccess: () => {
-          navigate({ to: '/' })
-        },
-        onError: (error) => {
-          if (error instanceof ApiError && error.statusCode === 409) {
-            setFormError('このメールアドレスは既に使用されています')
-            return
-          }
-          setFormError('登録に失敗しました。時間をおいて再度お試しください。')
-        },
-      })
+      try {
+        signupMutation.mutate(payload, {
+          onSuccess: () => {
+            navigate({ to: '/' })
+          },
+          onError: (error) => {
+            if (error instanceof ApiError && error.statusCode === 409) {
+              setFormError('このメールアドレスは既に使用されています')
+              return
+            }
+            setFormError('登録に失敗しました。時間をおいて再度お試しください。')
+          },
+        })
+      } catch (error) {
+        if (error instanceof ApiError && error.statusCode === 409) {
+          setFormError('このメールアドレスは既に使用されています')
+          return
+        }
+        setFormError('登録に失敗しました。時間をおいて再度お試しください。')
+      }
     },
   })
 
