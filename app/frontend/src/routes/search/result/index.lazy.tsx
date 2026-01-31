@@ -17,8 +17,8 @@ function RouteComponent() {
   const data = Route.useLoaderData()
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex overflow-y-auto border-b border-slate-500 p-0 bg-slate-50">
+    <div className="flex flex-col gap-4 w-full">
+      <div className="flex overflow-y-auto border-b border-slate-500 p-0 bg-slate-50 scrollbar-hidden">
         {(['scrap', 'artifact', 'user', 'tag'] satisfies Array<SearchType>).map(
           (type) => (
             <Link key={type} to="." search={(s) => ({ ...s, type })}>
