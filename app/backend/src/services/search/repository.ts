@@ -21,6 +21,14 @@ export const searchRepository = {
           },
         ],
       },
+      include: {
+        user: {
+          select: {
+            userName: true,
+            avatarUrl: true,
+          },
+        },
+      },
     })
   },
   findUsersByKeyword: async (keyword: string) => {
@@ -28,6 +36,7 @@ export const searchRepository = {
       select: {
         id: true,
         userName: true,
+        avatarUrl: true,
       },
       where: {
         userName: {
@@ -55,6 +64,14 @@ export const searchRepository = {
             },
           },
         ],
+      },
+      include: {
+        user: {
+          select: {
+            userName: true,
+            avatarUrl: true,
+          },
+        },
       },
     })
   },

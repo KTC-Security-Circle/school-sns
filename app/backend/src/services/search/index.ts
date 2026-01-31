@@ -47,4 +47,18 @@ export const searchService = {
       tag: type === 'tag' ? await handlers.tag() : [],
     })
   },
+  searchArtifacts: async (keyword: string) => {
+    return Result.succeed(
+      await searchRepository.findArtifactsByKeyword(keyword),
+    )
+  },
+  searchScraps: async (keyword: string) => {
+    return Result.succeed(await searchRepository.findScrapsByKeyword(keyword))
+  },
+  searchUsers: async (keyword: string) => {
+    return Result.succeed(await searchRepository.findUsersByKeyword(keyword))
+  },
+  searchTags: async (keyword: string) => {
+    return Result.succeed(await searchRepository.findTagsByKeyword(keyword))
+  },
 }
