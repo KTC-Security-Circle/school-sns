@@ -1,9 +1,11 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { createLazyFileRoute } from '@tanstack/react-router'
+import { Link, createLazyFileRoute } from '@tanstack/react-router'
 import { useFetchScrapDetailOptions } from '@/api/routes/scraps'
 import ScrapPreview from '@/features/timeline/scraps/components/ScrapPreview'
 import Actions from '@/features/timeline/scraps/detail/components/Actions'
 import ScrapDetail from '@/features/timeline/scraps/detail/components/ScrapDetail'
+import Popover from '@/components/layout/Popover'
+import NewPostButton from '@/features/timeline/components/NewPostButton'
 
 export const Route = createLazyFileRoute('/timeline/scraps/detail/$id/')({
   component: RouteComponent,
@@ -55,6 +57,11 @@ function RouteComponent() {
           />
         ))}
       </div>
+      <Popover>
+        <Link to="/timeline/scraps/create" search={{ replyTo: params.id }}>
+          <NewPostButton variant="reply" />
+        </Link>
+      </Popover>
     </div>
   )
 }
