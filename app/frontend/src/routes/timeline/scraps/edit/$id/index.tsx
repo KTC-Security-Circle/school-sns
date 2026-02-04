@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useFetchScrapDetailOptions } from '@/api/routes/scraps'
 import { useFetchTagsOptions } from '@/api/routes/tags'
 import { useFetchSelfInfoOptions } from '@/api/routes/users'
-import { UneditableError } from '@/features/timeline/scraps/edit/errors'
+import { UneditableError } from '@/features/timeline/errors'
 
 export const Route = createFileRoute('/timeline/scraps/edit/$id/')({
   loader: async ({ context: { queryClient }, params }) => {
@@ -16,7 +16,7 @@ export const Route = createFileRoute('/timeline/scraps/edit/$id/')({
     )
 
     if (targetUserId !== accessUserId) {
-      throw new UneditableError()
+      throw new UneditableError('scrap')
     }
   },
 })

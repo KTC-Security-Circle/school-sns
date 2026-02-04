@@ -1,6 +1,6 @@
 class UneditableError extends Error {
-  constructor() {
-    super('You do not have permission to edit this scrap.')
+  constructor(kind: 'scrap' | 'artifact') {
+    super(`You do not have permission to edit this ${kind}.`)
     this.name = 'UnEditableError'
   }
 }
