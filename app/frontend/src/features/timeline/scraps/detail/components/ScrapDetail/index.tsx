@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import type { Owner } from '@/features/timeline/types'
 import UserPreview from '@/components/ui/UserPreview'
 import EditButton from '@/features/timeline/components/EditButton'
+import MarkdownViewer from '@/features/timeline/components/MarkdownViewer'
 
 interface Props {
   owner: Owner
@@ -38,9 +39,10 @@ const ScrapDetail: React.FC<Props> = ({ owner, scrap, isEditable }) => {
           </Link>
         )}
       </div>
-      <div className="px-2 text-slate-700 whitespace-pre-wrap wrap-break-words">
-        {scrap.body}
-      </div>
+      <MarkdownViewer
+        mdSource={scrap.body}
+        className="px-2 text-slate-700 whitespace-pre-wrap wrap-break-words"
+      />
       <div className="flex flex-col gap-1 text-sm text-slate-500">
         <span>Created at: {new Date(scrap.createdAt).toLocaleString()}</span>
         <span>Updated at: {new Date(scrap.updatedAt).toLocaleString()}</span>

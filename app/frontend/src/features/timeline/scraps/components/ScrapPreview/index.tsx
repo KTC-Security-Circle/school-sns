@@ -4,6 +4,7 @@ import type { Owner } from '@/features/timeline/types'
 import Avatar from '@/components/ui/Avatar'
 import { cn } from '@/utils/cn'
 import IconWithLabel from '@/components/ui/IconWithLabel'
+import MarkdownViewer from '@/features/timeline/components/MarkdownViewer'
 
 interface Props {
   owner: Owner
@@ -44,9 +45,10 @@ const ScrapPreview: React.FC<Props> = ({ owner, scrap, className }) => {
             <span className="font-bold text-xl pb-1.5">{owner.name}</span>
           )}
         />
-        <p className="text-slate-800 whitespace-pre-wrap wrap-break-words">
-          {scrap.content}
-        </p>
+        <MarkdownViewer
+          mdSource={scrap.content}
+          className="text-slate-800 whitespace-pre-wrap wrap-break-words"
+        />
         <div className="flex flex-row gap-4 w-full justify-start">
           <IconWithLabel
             icon={() => <Heart className="text-slate-400" />}
