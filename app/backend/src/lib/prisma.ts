@@ -1,6 +1,7 @@
-import { PrismaClient } from './../../generated/prisma/sqlserver/index.js'
+import { PrismaClient } from './../../generated/prisma/index.js'
+import { env } from './env.js'
 
-const providerType = process.env.PLOVIDER_TYPE === 'sqlserver'
+const providerType = env.PROVIDER_TYPE === 'sqlserver'
 
 const prisma = (() => {
   if (providerType) {
