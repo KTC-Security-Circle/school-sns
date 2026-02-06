@@ -195,11 +195,12 @@ describe('UsersService', () => {
     it('USERS_SERVICE_010: ユーザーに紐づくコンテンツ一覧が取得できること', async () => {
       const user = await createTestUser()
 
-      await prisma.scraps.create({
+      await prisma.artifacts.create({
         data: {
           title: 'Test Scrap',
           body: 'This is a test scrap content.',
           userId: user.id,
+          publishedAt: new Date(),
         },
       })
 

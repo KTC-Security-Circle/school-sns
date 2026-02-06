@@ -27,6 +27,7 @@ describe('ArtifactsService', () => {
           body: 'Body 1',
           userId: user.id,
           status: 'PUBLISHED',
+          publishedAt: new Date(),
         },
       })
 
@@ -52,6 +53,7 @@ describe('ArtifactsService', () => {
           body: 'Body',
           userId: user.id,
           tagArtifacts: { create: { tagId: tag.id } },
+          publishedAt: new Date(),
         },
       })
 
@@ -62,6 +64,7 @@ describe('ArtifactsService', () => {
           body: 'Body',
           userId: user.id,
           tagArtifacts: { create: { tagId: otherTag.id } },
+          publishedAt: new Date(),
         },
       })
 
@@ -93,6 +96,7 @@ describe('ArtifactsService', () => {
           title: 'Followee Artifact',
           body: '.',
           userId: followee.id,
+          publishedAt: new Date(),
         },
       })
 
@@ -102,6 +106,7 @@ describe('ArtifactsService', () => {
           title: 'Stranger Artifact',
           body: '.',
           userId: stranger.id,
+          publishedAt: new Date(),
         },
       })
 

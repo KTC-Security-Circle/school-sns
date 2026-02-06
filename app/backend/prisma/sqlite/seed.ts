@@ -59,6 +59,7 @@ async function main() {
         title: faker.commerce.productName(),
         body: faker.lorem.paragraphs(),
         userId: user.id,
+        publishedAt: new Date(),
         tagArtifacts: {
           create: selectedTags.map((tag) => ({
             tag: {
