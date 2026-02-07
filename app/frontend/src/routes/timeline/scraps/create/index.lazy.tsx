@@ -9,10 +9,13 @@ export const Route = createLazyFileRoute('/timeline/scraps/create/')({
 })
 
 function RouteComponent() {
-  const { replyTo, shareArtifactId } = Route.useSearch()
+  const { replyTo, shareArtifactId, shareArtifactTitle } = Route.useSearch()
   const { form } = usePostScrapForm({
     replyToScrapId: replyTo,
-    shareArtifactId,
+    shareArtifact:
+      shareArtifactId !== null
+        ? { id: shareArtifactId, title: shareArtifactTitle }
+        : null,
   })
 
   const { data: tags } = useSuspenseQuery(useFetchTagsOptions())

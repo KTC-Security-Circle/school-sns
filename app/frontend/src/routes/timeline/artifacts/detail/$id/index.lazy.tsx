@@ -42,7 +42,7 @@ function RouteComponent() {
         />
         <Link
           to="/timeline/scraps/create"
-          search={{ shareArtifactId: data.id }}
+          search={{ shareArtifactId: data.id, shareArtifactTitle: data.title }}
         >
           <IconWithLabel
             icon={() => <Share size={18} />}

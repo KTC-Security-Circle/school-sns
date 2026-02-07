@@ -4,15 +4,18 @@ import { useScrapForm } from '@/features/timeline/scraps/hooks/useScrapForm'
 
 export const usePostScrapForm = (args: {
   replyToScrapId: string | null
-  shareArtifactId: string | null
+  shareArtifact: { id: string; title: string } | null
 }) => {
   const mutation = usePostScrapMutation()
   const navigate = useNavigate()
 
   return useScrapForm({
     initialValues: {
-      body: args.shareArtifactId
-        ? `[Shared Artifact](/timeline/artifacts/detail/${args.shareArtifactId})`
+      title: args.shareArtifact?.title
+        ? `この記事がスゴい!: ${args.shareArtifact.title}`
+        : '',
+      body: args.shareArtifact?.id
+        ? `[Shared Artifact](/timeline/artifacts/detail/${args.shareArtifact.id})`
         : '',
     },
     onSubmit: (value) => {
