@@ -72,9 +72,84 @@ const useFetchUserInfoOptions = (userId: string) =>
     },
   })
 
+const useFollowUserMutation = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (targetUserId: string) => {
+      const res = await apiClient.users[':userId'].follow.$post({
+        param: { userId: targetUserId },
+      })
+
+      if (!res.ok) {
+        return await parseApiError(res)
+      }
+      return await res.json()
+    },
+    onSuccess: (_, targetUserId) => {
+      queryClient.invalidateQueries({
+        queryKey: usersKeys.detail(targetUserId),
+      })
+    },
+  })
+}
+
+const useUnfollowUserMutation = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: async (targetUserId: string) => {
+      const res = await apiClient.users[':userId'].follow.$delete({
+        param: { userId: targetUserId },
+      })
+
+      return await res.json()
+    },
+    onSuccess: (_, targetUserId) => {
+      queryClient.invalidateQueries({
+        queryKey: usersKeys.detail(targetUserId),
+      })
+    },
+  })
+}
+
+const useFetchUserFollowersOptions = (userId: string) =>
+  queryOptions({
+    queryKey: usersKeys.follower(userId),
+    queryFn: async () => {
+      const res = await apiClient.users[':userId'].followers.$get({
+        param: { userId },
+      })
+
+      if (!res.ok) {
+        return await parseApiError(res)
+      }
+      return await res.json()
+    },
+  })
+
+const useFetchUserFollowingsOptions = (userId: string) =>
+  queryOptions({
+    queryKey: usersKeys.following(userId),
+    queryFn: async () => {
+      const res = await apiClient.users[':userId'].following.$get({
+        param: { userId },
+      })
+
+      if (!res.ok) {
+        return await parseApiError(res)
+      }
+      return await res.json()
+    },
+  })
+
 export {
   useFetchUserInfoOptions,
   useFetchSelfInfoOptions,
   useUpdateProfileMutation,
   useFetchUserContentsOptions,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
+  useFetchUserFollowersOptions,
+  useFetchUserFollowingsOptions,
 }
