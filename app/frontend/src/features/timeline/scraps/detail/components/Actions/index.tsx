@@ -2,12 +2,14 @@ import { MessageSquare } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import IconWithLabel from '@/components/ui/IconWithLabel'
 import LikeButton from '@/components/ui/LikeButton'
+import { cn } from '@/utils/cn'
 
 interface Props {
   likesCount: number
   commentsCount: number
   targetId: string
   isLiked: boolean
+  className?: string
 }
 
 const Actions: React.FC<Props> = ({
@@ -15,9 +17,15 @@ const Actions: React.FC<Props> = ({
   commentsCount,
   targetId,
   isLiked,
+  className,
 }) => {
   return (
-    <div className="flex flex-row gap-4 py-2 px-4 border-y border-y-slate-800">
+    <div
+      className={cn(
+        'flex flex-row gap-4 py-2 px-4 border-y border-y-slate-800',
+        className,
+      )}
+    >
       <IconWithLabel
         icon={() => <LikeButton isLiked={isLiked} scrapId={targetId} />}
         label={() => <span className="text-slate-600">{likesCount}</span>}

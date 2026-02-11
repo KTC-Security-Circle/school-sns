@@ -8,6 +8,8 @@ import Popover from '@/components/layout/Popover'
 import NewPostButton from '@/features/timeline/components/NewPostButton'
 import { useFetchSelfInfoOptions } from '@/api/routes/users'
 
+import { cn } from '@/utils/cn'
+
 export const Route = createLazyFileRoute('/timeline/scraps/detail/$id/')({
   component: RouteComponent,
 })
@@ -22,8 +24,8 @@ function RouteComponent() {
   } = useSuspenseQuery(useFetchScrapDetailOptions(params.id))
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col border-y-slate-800 bg-slate-100/70">
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col bg-white overflow-hidden rounded-xl shadow-sm">
         <ScrapDetail
           owner={{
             id: rootScrap.user.id,
@@ -32,6 +34,7 @@ function RouteComponent() {
           }}
           scrap={{
             id: rootScrap.id,
+            title: rootScrap.title,
             body: rootScrap.body,
             createdAt: rootScrap.createdAt,
             updatedAt: rootScrap.updatedAt,
@@ -45,7 +48,9 @@ function RouteComponent() {
           isLiked={rootScrap.isLiked}
         />
       </div>
-      <div className="flex flex-col gap-3 px-2">
+
+      {/* Replies Section */}
+      <div className="flex flex-col">
         {replies.map((r) => (
           <ScrapPreview
             key={r.id}
@@ -63,10 +68,13 @@ function RouteComponent() {
               isLiked: r.isLiked,
               parentId: rootScrap.id,
             }}
-            className="px-4 py-3 rounded-lg shadow-sm gap-3"
+            className={cn(
+              'border-x-0 border-t-0 border-b border-slate-200 rounded-none shadow-none px-4 py-3 hover:bg-slate-50 transition-colors',
+            )}
           />
         ))}
       </div>
+
       <Popover>
         <Link to="/timeline/scraps/create" search={{ replyTo: params.id }}>
           <NewPostButton variant="reply" />
